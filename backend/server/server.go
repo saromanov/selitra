@@ -10,6 +10,8 @@ import (
 func stats(w http.ResponseWriter, r *http.Request) {
 
 }
+
+// Create provides initialization of server
 func Create(c *Config) {
 	r := chi.NewRouter()
 	r.Get("/stats", stats)
