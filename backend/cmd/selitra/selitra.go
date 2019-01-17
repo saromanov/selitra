@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
-	"github.com/urfave/cli"
+	"github.com/saromanov/selitra/backend/internal/app"
 	"github.com/saromanov/selitra/backend/server"
+	"github.com/urfave/cli"
 )
 
 var flags = []cli.Flag{
@@ -17,13 +17,15 @@ var flags = []cli.Flag{
 }
 
 // setupServer provides initialization of server
-func setupServer(c *cli.Context) {
+func setupServer(a *app.App, c *cli.Context) {
 	server.Create(&server.Config{
-		Address: c.String("selitra-host")
+		App:     a,
+		Address: c.String("selitra-host"),
 	})
 }
 
 func run(c *cli.Context) {
+	app := app.New()
 	setupServer(c)
 }
 
