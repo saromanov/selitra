@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/saromanov/selitra/backend/internal/app"
 )
 
 // stats returns current statistics
@@ -16,7 +17,7 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create provides initialization of server
-func Create(c *Config) {
+func Create(a *app.App, c *Config) {
 	r := chi.NewRouter()
 	r.Get("/stats", stats)
 	r.Post("/stats", postStats)

@@ -18,15 +18,14 @@ var flags = []cli.Flag{
 
 // setupServer provides initialization of server
 func setupServer(a *app.App, c *cli.Context) {
-	server.Create(&server.Config{
-		App:     a,
+	server.Create(app, &server.Config{
 		Address: c.String("selitra-host"),
 	})
 }
 
 func run(c *cli.Context) {
 	app := app.New()
-	setupServer(c)
+	setupServer(app, c)
 }
 
 func main() {
