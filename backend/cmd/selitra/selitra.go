@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"github.com/saromanov/selitra/backend/server"
 )
 
 var flags = []cli.Flag{
@@ -15,15 +16,15 @@ var flags = []cli.Flag{
 	},
 }
 
+// setupServer provides initialization of server
 func setupServer(c *cli.Context) {
-
+	server.Create(&server.Config{
+		Address: c.String("selitra-host")
+	})
 }
+
 func run(c *cli.Context) {
-	server, err := setupServer(c)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(provider)
+	setupServer(c)
 }
 
 func main() {
