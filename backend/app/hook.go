@@ -1,6 +1,7 @@
 package app
 
 import log "github.com/Sirupsen/logrus"
+
 // LogrusHook  provides hook for logrus
 type LogrusHook struct {
 	Lvs []log.Level
@@ -11,6 +12,5 @@ func (l LogrusHook) Levels() []log.Level {
 }
 
 func (sh LogrusHook) Fire(e *log.Entry) error {
-	fmt.Println(e)
 	return nil
 }
