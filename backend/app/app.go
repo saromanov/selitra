@@ -34,5 +34,6 @@ func (a *App) SetLevels(levels []log.Level) {
 
 // Fire method implemented by Logrus Hook interface
 func (a *App) Fire(e *log.Entry) error {
+	a.eventsCount[e.Level.String()]++
 	return nil
 }
