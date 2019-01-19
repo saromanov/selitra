@@ -1,8 +1,8 @@
 package server
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 
 	"github.com/go-chi/chi"
 	"github.com/saromanov/selitra/backend/internal/app"
@@ -16,16 +16,15 @@ func stats(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStats(w http.ResponseWriter, r *http.Request) {
-	var c *app.Request
+	var c *Request
 	decoder := json.NewDecoder(r.Body)
-	err = decoder.Decode(messageObject)
+	err := decoder.Decode(c)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		jsonapi.WriteBasicError(w, "400", err.Error(), "Cannot messageObject")
 		return
 	}
-	
-	w.WriteHeader(http.StatusCreated)	
+
+	w.WriteHeader(http.StatusCreated)
 
 }
 
