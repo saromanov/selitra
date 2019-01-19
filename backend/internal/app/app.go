@@ -1,18 +1,26 @@
 package app
 
+import "sync"
+
 // App defines main logic
 type App struct {
-	eventsCount map[string]uint64
+	mu          *sync.RWMutex
+	levelsStat  sync.Map
+	eventsCount uint32
 }
 
 // New provides initialization of the app
 func New() *App {
-	return &App{
-		eventsCount: make(map[string]uint64),
-	}
+	return &App{}
 }
 
-// GetEventsCount returns map of counts for events
-func (a *App) GetEventsCount() map[string]uint64 {
-	return a.eventsCount
+// SendEvent provides sending of the event
+func (a *App) SendEvent(r *LogRequest) error {
+	a.levelsStat.Store(r.Level, 0)
+	return nil
+}
+
+// GetLevelsStat returns map of levels for events
+func (a *App) GetLevelsStat() sync.Map {
+	return a.levelsStat
 }
