@@ -8,7 +8,7 @@ import (
 	"github.com/saromanov/selitra/backend/internal/app"
 )
 
-var a *app.App
+var gl *app.App
 
 // stats returns current statistics
 func stats(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +24,7 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	go a.SendEvent(&app.LogRequest{
+	go gl.SendEvent(&app.LogRequest{
 		Level: c.Level,
 	})
 	w.WriteHeader(http.StatusCreated)
@@ -33,7 +33,7 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 
 // Create provides initialization of server
 func Create(a *app.App, c *Config) {
-	a = a
+	gl = a
 	r := chi.NewRouter()
 	r.Get("/stats", stats)
 	r.Post("/stats", postStats)
