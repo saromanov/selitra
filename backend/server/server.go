@@ -24,6 +24,9 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	go a.SendEvent(&app.LogRequest{
+		Level: c.Level,
+	})
 	w.WriteHeader(http.StatusCreated)
 
 }
