@@ -1,6 +1,9 @@
 package app
 
-import "sync"
+import (
+	"sync"
+	"sync/atomic"
+)
 
 // App defines main logic
 type App struct {
@@ -17,6 +20,7 @@ func New() *App {
 // SendEvent provides sending of the event
 func (a *App) SendEvent(r *LogRequest) error {
 	a.levelsStat.Store(r.Level, 0)
+	atomic.AddUint32(&a.eventsCount, 1)
 	return nil
 }
 
