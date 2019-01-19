@@ -1,4 +1,4 @@
-package app
+package server
 
 // Request defines log payload
 type Request struct {
