@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/saromanov/selitra/backend/internal/app"
 	structs "github.com/saromanov/selitra/backend/internal/structs/v1"
 )
 
@@ -35,7 +36,7 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 
 // toLogRequest convert request to inner representation
 func toLogRequest(r *Request) *structs.LogRequest {
-	return &app.LogRequest{
+	return &structs.LogRequest{
 		Level:   r.Level,
 		Message: r.Message,
 		Entries: r.Entries,

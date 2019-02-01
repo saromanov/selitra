@@ -3,6 +3,8 @@ package app
 import (
 	"sync"
 	"sync/atomic"
+
+	structs "github.com/saromanov/selitra/backend/internal/structs/v1"
 )
 
 // App defines main logic
@@ -18,7 +20,7 @@ func New() *App {
 }
 
 // SendEvent provides sending of the event
-func (a *App) SendEvent(r *LogRequest) error {
+func (a *App) SendEvent(r *structs.LogRequest) error {
 	a.levelsStat.Store(r.Level, 0)
 	atomic.AddUint32(&a.eventsCount, 1)
 	return nil
