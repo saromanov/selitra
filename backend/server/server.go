@@ -35,7 +35,7 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 func Create(a *app.App, c *Config) {
 	gl = a
 	r := chi.NewRouter()
-	r.Get("/stats", stats)
-	r.Post("/stats", postStats)
+	r.Get("/api/selitra/stats", stats)
+	r.Post("/api/selitra/stats", postStats)
 	http.ListenAndServe(c.Address, r)
 }
