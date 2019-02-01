@@ -15,7 +15,7 @@ type storage struct {
 func Create() (*storage, error) {
 	db, err := gorm.Open("postgres", "dbname=gorm")
 	if err != nil {
-		return fmt.Errorf("unable to open db: %v", err)
+		return nil, fmt.Errorf("unable to open db: %v", err)
 	}
 
 	return &storage{
