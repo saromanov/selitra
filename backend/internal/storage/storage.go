@@ -4,5 +4,5 @@ package storage
 // Storage defines interface for storage handling
 type Storage interface {
 	Insert(*LogRequest) error
-	Close()
+	Close() error
 }

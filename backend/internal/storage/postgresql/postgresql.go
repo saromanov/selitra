@@ -19,14 +19,18 @@ func Create() (st.Storage, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to open db: %v", err)
 	}
-
+	db.AutoMigrate(&st.LogRequest{})
 	return &storage{
 		db: db,
 	}, nil
 }
 
 // Insert provides inserting of data
-func (s *storage) Insert(m *storage.LogRequest) error {
+func (s *storage) Insert(m *st.LogRequest) error {
+	err := s.db.Create(m).Error
+	if err != nil {
+		return fmt.Errorf("storage: unable to insert data: %v", err)
+	}
 	return nil
 }
 
