@@ -8,14 +8,6 @@ import (
 	"github.com/urfave/cli"
 )
 
-var flags = []cli.Flag{
-	cli.StringFlag{
-		EnvVar: "SELITRA_HOST",
-		Name:   "selitra-host",
-		Usage:  "host of selitra server",
-	},
-}
-
 // setupServer provides initialization of server
 func setupServer(a *app.App, c *cli.Context) {
 	server.Create(app, &server.Config{
@@ -31,8 +23,27 @@ func run(c *cli.Context) {
 func main() {
 	app := cli.NewApp()
 	app.Name = "selitra"
-	app.Action = run
-	if err := app.Run(os.Args); err != nil {
+	app.Usage = "log processing tool"
+	app.Commands = []cli.Command{
+		{
+			Name:    "config",
+			Aliases: []string{"c"},
+			Usage:   "path to .yml config",
+			Action: func(c *cli.Context) error {
+				configPath := c.Args().First()
+				config, err := parseConfig(configPath)
+				if err != nil {
+					panic(err)
+				}
+				if err := setupApp(config); err != nil {
+					panic(err)
+				}
+				return nil
+			},
+		},
+	}
+	err := app.Run(os.Args)
+	if err != nil {
 		panic(err)
 	}
 }
