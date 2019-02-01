@@ -23,10 +23,12 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	if c == nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
-	go gl.SendEvent(&app.LogRequest{
-		Level: c.Level,
-	})
+	go gl.SendEvent(toLogRequest(c))
 	w.WriteHeader(http.StatusCreated)
 
 }
