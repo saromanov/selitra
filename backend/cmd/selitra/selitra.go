@@ -13,13 +13,13 @@ import (
 )
 
 // setupServer provides initialization of server
-func setupServer(a *app.App, c *cli.Context) {
-	server.Create(app, &server.Config{
-		Address: c.String("selitra-host"),
+func setupServer(a *app.App, c *structs.Config) {
+	server.Create(a, &server.Config{
+		Address: c.Address,
 	})
 }
 
-func run(c *cli.Context) {
+func run(c *structs.Config) {
 	app := app.New()
 	setupServer(app, c)
 }
@@ -54,9 +54,7 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
-				if err := setupApp(config); err != nil {
-					panic(err)
-				}
+				run(config)
 				return nil
 			},
 		},
