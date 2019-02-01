@@ -31,6 +31,17 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// toLogRequest convert request to inner representation
+func toLogRequest(r *Request) *app.LogRequest {
+	return &app.LogRequest{
+		Level:   r.Level,
+		Message: r.Message,
+		Entries: r.Entries,
+		Name:    r.Name,
+		Labels:  r.Labels,
+	}
+}
+
 // Create provides initialization of server
 func Create(a *app.App, c *Config) {
 	gl = a
