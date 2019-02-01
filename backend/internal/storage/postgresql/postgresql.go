@@ -12,6 +12,7 @@ type storage struct {
 	db *gorm.DB
 }
 
+// Create provides init for postgesql storage
 func Create() (*storage, error) {
 	db, err := gorm.Open("postgres", "dbname=gorm")
 	if err != nil {
@@ -23,6 +24,7 @@ func Create() (*storage, error) {
 	}, nil
 }
 
-func (s *storage) Close() {
-	s.db.Close()
+// Close provides closing of db
+func (s *storage) Close() error {
+	return s.db.Close()
 }
