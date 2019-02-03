@@ -1,6 +1,7 @@
 package server
 
 import (
+	"time"
 	"encoding/json"
 	"net/http"
 
@@ -42,6 +43,7 @@ func toLogRequest(r *Request) *structs.LogRequest {
 		Entries: r.Entries,
 		Name:    r.Name,
 		Labels:  r.Labels,
+		Timestamp: time.Now().UnixNano(),
 	}
 }
 
