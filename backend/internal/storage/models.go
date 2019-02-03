@@ -9,6 +9,7 @@ type LogRequest struct {
 	Entries map[string]interface{}
 	Name    string
 	Labels  []string
+	Timestamp uint64
 }
 
 // SearchRequest defines request for getting logs
