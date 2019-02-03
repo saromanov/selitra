@@ -20,7 +20,7 @@ func setupServer(a *app.App, c *structs.Config) {
 }
 
 func run(c *structs.Config) {
-	app := app.New()
+	app, _ := app.New(c)
 	setupServer(app, c)
 }
 
