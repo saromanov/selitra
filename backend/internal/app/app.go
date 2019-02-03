@@ -5,6 +5,8 @@ import (
 	"sync/atomic"
 
 	structs "github.com/saromanov/selitra/backend/internal/structs/v1"
+	"github.com/saromanov/selitra/backend/internal/storage"
+	"github.com/saromanov/selitra/backend/internal/storage/postgres"
 )
 
 // App defines main logic
@@ -12,11 +14,19 @@ type App struct {
 	mu          *sync.RWMutex
 	levelsStat  sync.Map
 	eventsCount uint32
+	db storage.Storage
 }
 
 // New provides initialization of the app
-func New() *App {
-	return &App{}
+func New() (*App, error) {
+
+	store, err := postgres.Create()
+	if err != nil {
+		return nil, fmt.Errorf("unable to setup Postgresql: %v", err)
+	}
+	return &App{
+		db: store,
+	}
 }
 
 // SendEvent provides sending of the event
