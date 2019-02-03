@@ -10,3 +10,7 @@ type LogRequest struct {
 	Name    string
 	Labels  []string
 }
+
+// SearchRequest defines request for getting logs
+type SearchRequest struct {
+}

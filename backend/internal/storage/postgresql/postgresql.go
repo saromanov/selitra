@@ -34,6 +34,11 @@ func (s *storage) Insert(m *st.LogRequest) error {
 	return nil
 }
 
+// Search provides searching of metrics
+func (s *storage) Search(m *st.SearchRequest) error{
+	return nil
+}
+
 // Close provides closing of db
 func (s *storage) Close() error {
 	return s.db.Close()
