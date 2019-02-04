@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	st "github.com/saromanov/selitra/backend/internal/storage"
+	structs "github.com/saromanov/selitra/backend/internal/structs/v1"
 )
 
 // storage implements db handling with Postgesql
@@ -14,8 +15,12 @@ type storage struct {
 }
 
 // Create provides init for postgesql storage
-func Create() (st.Storage, error) {
-	db, err := gorm.Open("postgres", "dbname=gorm")
+func Create(s *structs.Config) (st.Storage, error) {
+	args := "dbname=selitra"
+	if s.DBName != "" && s.DBPassword != "" {
+		args += fmt.Sprintf(" dbname=%s password=%s", s.DBName, s.DBPassword)
+	}
+	db, err := gorm.Open("postgres", args)
 	if err != nil {
 		return nil, fmt.Errorf("unable to open db: %v", err)
 	}
@@ -35,7 +40,7 @@ func (s *storage) Insert(m *st.LogRequest) error {
 }
 
 // Search provides searching of metrics
-func (s *storage) Search(m *st.SearchRequest) error{
+func (s *storage) Search(m *st.SearchRequest) error {
 	return nil
 }
 

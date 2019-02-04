@@ -21,7 +21,7 @@ type App struct {
 // New provides initialization of the app
 func New(c *structs.Config) (*App, error) {
 
-	store, err := postgresql.Create()
+	store, err := postgresql.Create(c)
 	if err != nil {
 		return nil, fmt.Errorf("unable to setup Postgresql: %v", err)
 	}
