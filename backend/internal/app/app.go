@@ -13,7 +13,6 @@ import (
 // App defines main logic
 type App struct {
 	mu          *sync.RWMutex
-	levelsStat  sync.Map
 	eventsCount uint32
 	db          storage.Storage
 }
@@ -32,7 +31,8 @@ func New(c *structs.Config) (*App, error) {
 
 // SendEvent provides sending of the event
 func (a *App) SendEvent(r *structs.LogRequest) error {
-	a.levelsStat.Store(r.Level, 0)
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	atomic.AddUint32(&a.eventsCount, 1)
 	if err := a.db.Insert(logRequestToModel(r)); err != nil {
 		return fmt.Errorf("unable to insert data: %v", err)
@@ -42,16 +42,13 @@ func (a *App) SendEvent(r *structs.LogRequest) error {
 
 // Search returns list of events
 func (a *App) Search(*structs.LogRequest) ([]*structs.LogRequest, error) {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
 	result, err := a.db.Search(nil)
 	if err != nil {
 		return nil, err
 	}
 	return searchModelsToResponse(result), nil
-}
-
-// GetLevelsStat returns map of levels for events
-func (a *App) GetLevelsStat() sync.Map {
-	return a.levelsStat
 }
 
 func logRequestToModel(r *structs.LogRequest) *storage.LogRequest {

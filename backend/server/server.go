@@ -30,7 +30,11 @@ func stats(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(response)
+	if _, err := w.Write(response); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Fprint(w, "unable to write data")
+		return
+	}
 }
 
 func postStats(w http.ResponseWriter, r *http.Request) {
@@ -47,7 +51,12 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	go gl.SendEvent(toLogRequest(c))
+	go func() {
+		err := gl.SendEvent(toLogRequest(c))
+		if err != nil {
+			fmt.Printf("unable to send event: %v\n", err)
+		}
+	}()
 	w.WriteHeader(http.StatusCreated)
 
 }
