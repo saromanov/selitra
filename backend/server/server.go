@@ -15,7 +15,22 @@ var gl *app.App
 
 // stats returns current statistics
 func stats(w http.ResponseWriter, r *http.Request) {
+	result, err := gl.Search(nil)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "%v", err)
+		return
+	}
 
+	response, err := json.Marshal(result)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Fprintf(w, "%v", err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(response)
 }
 
 func postStats(w http.ResponseWriter, r *http.Request) {

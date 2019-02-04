@@ -40,9 +40,13 @@ func (a *App) SendEvent(r *structs.LogRequest) error {
 	return nil
 }
 
-// GetEvents returns list of events
-func (a *App) GetEvents() ([]*structs.LogRequest, error) {
-	return nil, nil
+// Search returns list of events
+func (a *App) Search(*structs.LogRequest) ([]*structs.LogRequest, error) {
+	result, err := a.db.Search(nil)
+	if err != nil {
+		return nil, err
+	}
+	return searchModelsToResponse(result), nil
 }
 
 // GetLevelsStat returns map of levels for events
@@ -55,6 +59,25 @@ func logRequestToModel(r *structs.LogRequest) *storage.LogRequest {
 		Message:   r.Message,
 		Name:      r.Name,
 		Timestamp: uint64(r.Timestamp),
+		Entry:     r.Entry,
+		Service:   r.Service,
+		Labels:    r.Labels,
+	}
+}
+
+func searchModelsToResponse(s []*storage.LogRequest) []*structs.LogRequest {
+	result := make([]*structs.LogRequest, len(s))
+	for i, item := range s {
+		result[i] = modelToLogRequest(item)
+	}
+	return result
+}
+
+func modelToLogRequest(r *storage.LogRequest) *structs.LogRequest {
+	return &structs.LogRequest{
+		Message:   r.Message,
+		Name:      r.Name,
+		Timestamp: int64(r.Timestamp),
 		Entry:     r.Entry,
 		Service:   r.Service,
 		Labels:    r.Labels,

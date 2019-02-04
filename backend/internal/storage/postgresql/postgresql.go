@@ -42,16 +42,11 @@ func (s *storage) Insert(m *st.LogRequest) error {
 // Insert provides finding data
 func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 	var response []*st.LogRequest
-	err := s.db.Find(nil, &response).Error
+	err := s.db.Find(&response).Error
 	if err != nil {
 		return nil, fmt.Errorf("storage: unable to find data: %v", err)
 	}
 	return response, nil
-}
-
-// Search provides searching of metrics
-func (s *storage) Search(m *st.SearchRequest) error {
-	return nil
 }
 
 // Close provides closing of db
