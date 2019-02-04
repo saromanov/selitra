@@ -4,7 +4,8 @@ package v1
 type LogRequest struct {
 	Level     string
 	Message   string
-	Entries   map[string]interface{}
+	Entry     string `json:"entry"`
+	Service   string `json:"service"`
 	Name      string
 	Labels    []string
 	Timestamp int64

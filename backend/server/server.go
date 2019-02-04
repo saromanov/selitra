@@ -41,7 +41,7 @@ func toLogRequest(r *Request) *structs.LogRequest {
 	return &structs.LogRequest{
 		Level:     r.Level,
 		Message:   r.Message,
-		Entries:   r.Entries,
+		Entry:     r.Entry,
 		Name:      r.Name,
 		Labels:    r.Labels,
 		Timestamp: time.Now().UnixNano(),
@@ -54,5 +54,6 @@ func Create(a *app.App, c *Config) {
 	r := chi.NewRouter()
 	r.Get("/api/selitra/stats", stats)
 	r.Post("/api/selitra/stats", postStats)
+	fmt.Println("Starting of the server...")
 	fmt.Println(http.ListenAndServe(c.Address, r))
 }
