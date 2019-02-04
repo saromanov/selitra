@@ -36,8 +36,17 @@ func (s *storage) Insert(m *st.LogRequest) error {
 	if err != nil {
 		return fmt.Errorf("storage: unable to insert data: %v", err)
 	}
-	fmt.Println("INSERTED")
 	return nil
+}
+
+// Insert provides finding data
+func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
+	var response []*st.LogRequest
+	err := s.db.Find(nil, &response).Error
+	if err != nil {
+		return nil, fmt.Errorf("storage: unable to find data: %v", err)
+	}
+	return response, nil
 }
 
 // Search provides searching of metrics
