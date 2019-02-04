@@ -34,7 +34,15 @@ func New(c *structs.Config) (*App, error) {
 func (a *App) SendEvent(r *structs.LogRequest) error {
 	a.levelsStat.Store(r.Level, 0)
 	atomic.AddUint32(&a.eventsCount, 1)
+	if err := a.db.Insert(r); err != nil {
+		return fmt.Errorf("unable to insert data: %v", err)
+	}
 	return nil
+}
+
+// GetEvents returns list of events
+func (a *App) GetEvents() ([]*structs.LogRequest, error) {
+	return nil, nil
 }
 
 // GetLevelsStat returns map of levels for events
