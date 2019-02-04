@@ -1,15 +1,19 @@
 package storage
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/lib/pq"
+)
 
 // LogRequest defines model for log storage
 type LogRequest struct {
 	gorm.Model
-	Message string
-	Entries map[string]interface{}
-	Name    string
-	Labels  []string
+	Message   string
+	Name      string
+	Labels    pq.StringArray `gorm:"type:varchar(64)[]"`
 	Timestamp uint64
+	Entry     string
+	Service   string
 }
 
 // SearchRequest defines request for getting logs
