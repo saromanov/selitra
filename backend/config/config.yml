@@ -1,3 +1,4 @@
 Address: 127.0.0.6320
-Dbname: root
-Dbpassword: root
+Dbname: selitra
+Dbpassword: selitra
+Dbuser: selitra

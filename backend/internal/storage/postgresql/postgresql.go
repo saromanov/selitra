@@ -17,8 +17,8 @@ type storage struct {
 // Create provides init for postgesql storage
 func Create(s *structs.Config) (st.Storage, error) {
 	args := "dbname=selitra"
-	if s.DBName != "" && s.DBPassword != "" {
-		args += fmt.Sprintf(" dbname=%s password=%s", s.DBName, s.DBPassword)
+	if s.DBName != "" && s.DBPassword != "" && s.DBUser != "" {
+		args += fmt.Sprintf(" user=%s dbname=%s password=%s", s.DBUser, s.DBName, s.DBPassword)
 	}
 	db, err := gorm.Open("postgres", args)
 	if err != nil {
