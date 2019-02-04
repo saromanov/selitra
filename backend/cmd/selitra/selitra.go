@@ -58,7 +58,9 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
-				run(config)
+				if err := run(config); err != nil {
+					panic(err)
+				}
 				return nil
 			},
 		},
