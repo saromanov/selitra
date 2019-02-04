@@ -36,6 +36,7 @@ func (s *storage) Insert(m *st.LogRequest) error {
 	if err != nil {
 		return fmt.Errorf("storage: unable to insert data: %v", err)
 	}
+	fmt.Println("INSERTED")
 	return nil
 }
 

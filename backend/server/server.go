@@ -21,9 +21,10 @@ func stats(w http.ResponseWriter, r *http.Request) {
 func postStats(w http.ResponseWriter, r *http.Request) {
 	var c *Request
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(c)
+	err := decoder.Decode(&c)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "unable to decode data: %v", err)
 		return
 	}
 	if c == nil {
