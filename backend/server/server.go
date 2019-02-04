@@ -1,9 +1,10 @@
 package server
 
 import (
-	"time"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/saromanov/selitra/backend/internal/app"
@@ -38,11 +39,11 @@ func postStats(w http.ResponseWriter, r *http.Request) {
 // toLogRequest convert request to inner representation
 func toLogRequest(r *Request) *structs.LogRequest {
 	return &structs.LogRequest{
-		Level:   r.Level,
-		Message: r.Message,
-		Entries: r.Entries,
-		Name:    r.Name,
-		Labels:  r.Labels,
+		Level:     r.Level,
+		Message:   r.Message,
+		Entries:   r.Entries,
+		Name:      r.Name,
+		Labels:    r.Labels,
 		Timestamp: time.Now().UnixNano(),
 	}
 }
@@ -53,5 +54,5 @@ func Create(a *app.App, c *Config) {
 	r := chi.NewRouter()
 	r.Get("/api/selitra/stats", stats)
 	r.Post("/api/selitra/stats", postStats)
-	http.ListenAndServe(c.Address, r)
+	fmt.Println(http.ListenAndServe(c.Address, r))
 }
