@@ -19,9 +19,13 @@ func setupServer(a *app.App, c *structs.Config) {
 	})
 }
 
-func run(c *structs.Config) {
-	app, _ := app.New(c)
+func run(c *structs.Config) error {
+	app, err := app.New(c)
+	if err != nil {
+		return fmt.Errorf("unable to init app: %v", err)
+	}
 	setupServer(app, c)
+	return nil
 }
 
 // parseConfig provides parsing of the config .yml file
