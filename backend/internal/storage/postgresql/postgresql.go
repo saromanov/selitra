@@ -42,11 +42,20 @@ func (s *storage) Insert(m *st.LogRequest) error {
 // Insert provides finding data
 func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 	var response []*st.LogRequest
-	err := s.db.Find(&response).Error
+	s.db.Where()
+	err := s.makeQuery(s.db, sr).Find(&response).Error
 	if err != nil {
 		return nil, fmt.Errorf("storage: unable to find data: %v", err)
 	}
 	return response, nil
+}
+
+func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB{
+	if sr.Name != "" {
+		db.Where("name=?", sr.Name)
+		return db
+	}
+	return db
 }
 
 // Aggregate provides aggregation on the data
