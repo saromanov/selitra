@@ -10,3 +10,9 @@ type LogRequest struct {
 	Labels    []string
 	Timestamp int64
 }
+
+// SearchRequest defines struct for searching
+type SearchRequest struct {
+	FromTimestamp int64
+	ToTimestamp   int64
+}
