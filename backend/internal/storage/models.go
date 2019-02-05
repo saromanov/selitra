@@ -18,4 +18,6 @@ type LogRequest struct {
 
 // SearchRequest defines request for getting logs
 type SearchRequest struct {
+	FromTimestamp int64
+	ToTimestamp int64
 }
