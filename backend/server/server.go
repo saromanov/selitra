@@ -15,7 +15,11 @@ var gl *app.App
 
 // stats returns current statistics
 func stats(w http.ResponseWriter, r *http.Request) {
-	result, err := gl.Search(nil)
+	sr := &structs.SearchRequest{
+		FromTimestamp: r.FormValue("fromTimestamp"),
+		ToTimestamp:   r.Formvalue("toTimestamp"),
+	}
+	result, err := gl.Search(sr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "%v", err)
