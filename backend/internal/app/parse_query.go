@@ -3,6 +3,7 @@ package app
 import (
 	"errors"
 	"strings"
+
 	"github.com/jinzhu/now"
 	"github.com/saromanov/selitra/backend/internal/storage"
 )
@@ -14,11 +15,21 @@ var (
 
 // parseQuery provides parsing of the query and convert
 // it to the search request
-func parseQuery(query string)(*storage.SearchRequest, error) {
+func parseQuery(query string) (*storage.SearchRequest, error) {
 	exprs := strings.Split(query, ";")
-	for i := 0;i < len(exprs);i++ {
-		switch exp
+	result := &storage.SearchRequest{}
+	for i := 0; i < len(exprs); i++ {
+		if strings.HasPrefix(exprs[i], "date") {
+			fts, ets, err := getDate(exprs[i])
+			if err != nil {
+				return nil, err
+			}
+			result.FromTimestamp = fts
+			result.ToTimestamp = ets
+		}
 	}
+
+	return result, nil
 }
 
 // getDate returns from and to timestamps
