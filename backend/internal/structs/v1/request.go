@@ -15,4 +15,5 @@ type LogRequest struct {
 type SearchRequest struct {
 	FromTimestamp string
 	ToTimestamp   string
+	Name          string
 }

@@ -18,6 +18,7 @@ func stats(w http.ResponseWriter, r *http.Request) {
 	sr := &structs.SearchRequest{
 		FromTimestamp: r.FormValue("fromTimestamp"),
 		ToTimestamp:   r.FormValue("toTimestamp"),
+		Name: r.FormValue("name"),
 	}
 	result, err := gl.Search(sr)
 	if err != nil {
