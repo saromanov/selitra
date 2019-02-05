@@ -51,7 +51,7 @@ func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 
 func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
 	if sr.Name != "" {
-		db.Where("name=?", sr.Name)
+		db = db.Where("name=?", sr.Name)
 		return db
 	}
 	return db
