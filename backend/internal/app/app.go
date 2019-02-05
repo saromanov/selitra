@@ -41,10 +41,10 @@ func (a *App) SendEvent(r *structs.LogRequest) error {
 }
 
 // Search returns list of events
-func (a *App) Search(*structs.LogRequest) ([]*structs.LogRequest, error) {
+func (a *App) Search(s *structs.SearchRequest) ([]*structs.LogRequest, error) {
 	a.mu.RLock()
 	defer a.mu.RUnlock()
-	result, err := a.db.Search(nil)
+	result, err := a.db.Search(searchRequestToInner(s))
 	if err != nil {
 		return nil, err
 	}
@@ -79,4 +79,8 @@ func modelToLogRequest(r *storage.LogRequest) *structs.LogRequest {
 		Service:   r.Service,
 		Labels:    r.Labels,
 	}
+}
+
+func searchRequestToInner(r *storage.LogRequest) *storage.SearchRequest {
+	return &storage.SearchRequest{}
 }
