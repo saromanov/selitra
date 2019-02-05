@@ -81,6 +81,6 @@ func modelToLogRequest(r *storage.LogRequest) *structs.LogRequest {
 	}
 }
 
-func searchRequestToInner(r *storage.LogRequest) *storage.SearchRequest {
+func searchRequestToInner(r *structs.SearchRequest) *storage.SearchRequest {
 	return &storage.SearchRequest{}
 }

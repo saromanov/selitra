@@ -17,7 +17,7 @@ var gl *app.App
 func stats(w http.ResponseWriter, r *http.Request) {
 	sr := &structs.SearchRequest{
 		FromTimestamp: r.FormValue("fromTimestamp"),
-		ToTimestamp:   r.Formvalue("toTimestamp"),
+		ToTimestamp:   r.FormValue("toTimestamp"),
 	}
 	result, err := gl.Search(sr)
 	if err != nil {
