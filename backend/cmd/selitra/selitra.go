@@ -37,7 +37,7 @@ func parseConfig(path string) (*structs.Config, error) {
 	var c *structs.Config
 	err = yaml.Unmarshal(yamlFile, &c)
 	if err != nil {
-		return nil, fmt.Errorf("unable to parse .born.yml: %v", err)
+		return nil, fmt.Errorf("unable to parse .config.yml: %v", err)
 	}
 
 	return c, nil
