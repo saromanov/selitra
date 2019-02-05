@@ -27,6 +27,7 @@ func New(c *structs.Config) (*App, error) {
 	}
 	return &App{
 		db: store,
+		mu: &sync.RWMutex{},
 	}, nil
 }
 
