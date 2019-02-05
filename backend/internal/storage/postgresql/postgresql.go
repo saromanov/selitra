@@ -49,6 +49,11 @@ func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 	return response, nil
 }
 
+// Aggregate provides aggregation on the data
+func (s *storage) Aggregate(sr *st.SearchRequest) ([]*st.LogRequest, error) {
+	return nil, nil
+}
+
 // Close provides closing of db
 func (s *storage) Close() error {
 	return s.db.Close()
