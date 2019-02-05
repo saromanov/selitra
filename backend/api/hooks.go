@@ -19,7 +19,7 @@ func (a *App) Levels() []log.Level {
 	return a.levels
 }
 
-// SetLevels provides setting of leveles to teh app
+// SetLevels provides setting of leveles to the app
 func (a *App) SetLevels(levels []log.Level) {
 	a.levels = levels
 }
