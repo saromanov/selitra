@@ -13,6 +13,6 @@ type LogRequest struct {
 
 // SearchRequest defines struct for searching
 type SearchRequest struct {
-	FromTimestamp int64
-	ToTimestamp   int64
+	FromTimestamp string
+	ToTimestamp   string
 }
