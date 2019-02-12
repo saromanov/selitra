@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/saromanov/selitra/backend/internal/storage"
 	"github.com/saromanov/selitra/backend/internal/storage/postgresql"
@@ -16,6 +17,7 @@ type App struct {
 	mu          *sync.RWMutex
 	eventsCount uint32
 	db          storage.Storage
+	startTime   time.Time
 }
 
 // New provides initialization of the app
@@ -26,8 +28,9 @@ func New(c *structs.Config) (*App, error) {
 		return nil, fmt.Errorf("unable to setup Postgresql: %v", err)
 	}
 	return &App{
-		db: store,
-		mu: &sync.RWMutex{},
+		db:        store,
+		mu:        &sync.RWMutex{},
+		startTime: time.Now().UTC(),
 	}, nil
 }
 
