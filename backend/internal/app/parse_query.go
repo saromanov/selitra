@@ -28,10 +28,11 @@ func parseQuery(query string) (*storage.SearchRequest, error) {
 			result.ToTimestamp = ets
 		}
 		if strings.HasPrefix(exprs[i], "service") {
-			result.Service, err = getService(exprs[i])
+			service, err := getService(exprs[i])
 			if err != nil {
 				return nil, err
 			}
+			result.Service = service
 		}
 	}
 
