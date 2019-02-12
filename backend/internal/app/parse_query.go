@@ -28,7 +28,10 @@ func parseQuery(query string) (*storage.SearchRequest, error) {
 			result.ToTimestamp = ets
 		}
 		if strings.HasPrefix(exprs[i], "service") {
-			result.Service = getService(exprs[i])
+			result.Service, err = getService(exprs[i])
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -55,9 +58,11 @@ func getDate(expr string) (int64, int64, error) {
 	return 0, 0, errDateRange
 }
 
+// getService returns service name in the case "service=name"
 func getService(line string) (string, error) {
-	values := strings.Split(expr, "=")
+	values := strings.Split(line, "=")
 	if len(values) <= 1 {
 		return "", errQueryParse
 	}
+	return values[1], nil
 }
