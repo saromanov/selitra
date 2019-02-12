@@ -43,6 +43,23 @@ func stats(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// stats returns current statistics
+func getServerStats(w http.ResponseWriter, r *http.Request) {
+	response, err := json.Marshal(gl.Stat())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Fprintf(w, "%v", err)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if _, err := w.Write(response); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Fprint(w, "unable to write data")
+		return
+	}
+}
+
 func postStats(w http.ResponseWriter, r *http.Request) {
 	var c *Request
 	decoder := json.NewDecoder(r.Body)
@@ -84,6 +101,7 @@ func Create(a *app.App, c *Config) {
 	gl = a
 	r := chi.NewRouter()
 	r.Get("/api/selitra/stats", stats)
+	r.Get("/api/selitra/server", getServerStats)
 	r.Post("/api/selitra/stats", postStats)
 	fmt.Printf("Starting of the server at %s...\n", c.Address)
 	fmt.Println(http.ListenAndServe(c.Address, r))
