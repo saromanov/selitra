@@ -19,3 +19,10 @@ curl -X POST -H "Content-Type: application/json" -d '{"level": "LOW",
 ```
 !service=first;date=today;level=ERROR"
 ```
+
+## Server stat
+
+Return current server stat
+```
+http://127.0.0.1:6320/api/selitra/server
+```
