@@ -49,7 +49,14 @@ func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 	return response, nil
 }
 
+// makeQuery provides making of the query to Postgresql
 func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
+	if sr.Query != "" {
+		if sr.Service != "" {
+			db = db.Where("service=?", sr.Service)
+		}
+		return db
+	}
 	if sr.Name != "" {
 		db = db.Where("name=?", sr.Name)
 		return db
