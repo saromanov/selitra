@@ -61,6 +61,9 @@ func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
 		db = db.Where("name=?", sr.Name)
 		return db
 	}
+	if sr.Service != "" {
+		db = db.Where("service=?", sr.Service)
+	}
 	return db
 }
 
