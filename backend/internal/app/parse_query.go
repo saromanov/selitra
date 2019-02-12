@@ -43,6 +43,10 @@ func getDate(expr string) (int64, int64, error) {
 	switch values[1] {
 	case "today":
 		return now.BeginningOfDay().UnixNano(), now.EndOfDay().UnixNano(), nil
+	case "week":
+		return now.BeginningOfWeek().UnixNano(), now.EndOfDay().UnixNano(), nil
+	case "month":
+		return now.BeginningOfWeek().UnixNano(), now.EndOfDay().UnixNano(), nil
 	}
 
 	return 0, 0, errDateRange

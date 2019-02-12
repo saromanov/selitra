@@ -84,6 +84,6 @@ func Create(a *app.App, c *Config) {
 	r := chi.NewRouter()
 	r.Get("/api/selitra/stats", stats)
 	r.Post("/api/selitra/stats", postStats)
-	fmt.Printf"Starting of the server at %s...\n",c.Address)
+	fmt.Printf("Starting of the server at %s...\n", c.Address)
 	fmt.Println(http.ListenAndServe(c.Address, r))
 }
