@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	errDateParse = errors.New("unable to parse date")
-	errDateRange = errors.New("unknown format of the date. It should be today, week, month, year")
+	errQueryParse = errors.New("unable to parse query")
+	errDateRange  = errors.New("unknown format of the date. It should be today, week, month, year")
 )
 
 // parseQuery provides parsing of the query and convert
@@ -27,7 +27,7 @@ func parseQuery(query string) (*storage.SearchRequest, error) {
 			result.FromTimestamp = fts
 			result.ToTimestamp = ets
 		}
-		if strings.HasPrefix(exprs[i], "service"){
+		if strings.HasPrefix(exprs[i], "service") {
 			result.Service = getService(exprs[i])
 		}
 	}
@@ -40,7 +40,7 @@ func parseQuery(query string) (*storage.SearchRequest, error) {
 func getDate(expr string) (int64, int64, error) {
 	values := strings.Split(expr, "=")
 	if len(values) <= 1 {
-		return 0, 0, errDateParse
+		return 0, 0, errQueryParse
 	}
 
 	switch values[1] {
@@ -55,9 +55,9 @@ func getDate(expr string) (int64, int64, error) {
 	return 0, 0, errDateRange
 }
 
-func getService(line string) (string, error){
+func getService(line string) (string, error) {
 	values := strings.Split(expr, "=")
 	if len(values) <= 1 {
-		return 0, 0, errDateParse
+		return "", errQueryParse
 	}
 }
