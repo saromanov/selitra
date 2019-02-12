@@ -15,7 +15,7 @@ import (
 // App defines main logic
 type App struct {
 	mu          *sync.RWMutex
-	eventsCount uint32
+	eventsCount uint64
 	db          storage.Storage
 	startTime   time.Time
 }
@@ -38,7 +38,7 @@ func New(c *structs.Config) (*App, error) {
 func (a *App) SendEvent(r *structs.LogRequest) error {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	atomic.AddUint32(&a.eventsCount, 1)
+	atomic.AddUint64(&a.eventsCount, 1)
 	if err := a.db.Insert(logRequestToModel(r)); err != nil {
 		return fmt.Errorf("unable to insert data: %v", err)
 	}
@@ -54,6 +54,15 @@ func (a *App) Search(s *structs.SearchRequest) ([]*structs.LogRequest, error) {
 		return nil, err
 	}
 	return searchModelsToResponse(result), nil
+}
+
+// Stat retruns statistics of server
+func (a *App) Stat() *structs.ServerStat {
+	eventsCount := atomic.LoadUint64(&a.eventsCount)
+	return &structs.ServerStat{
+		StartTime: a.startTime.Format(time.RFC3339),
+		Events:    eventsCount,
+	}
 }
 
 func logRequestToModel(r *structs.LogRequest) *storage.LogRequest {
