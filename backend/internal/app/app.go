@@ -90,5 +90,6 @@ func searchRequestToInner(r *structs.SearchRequest) *storage.SearchRequest {
 		resp.ToTimestamp, _ = strconv.ParseInt(r.ToTimestamp, 0, 64)
 	}
 	resp.Name = r.Name
+	resp.Query = r.Query
 	return resp
 }

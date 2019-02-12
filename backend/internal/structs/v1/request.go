@@ -16,4 +16,5 @@ type SearchRequest struct {
 	FromTimestamp string
 	ToTimestamp   string
 	Name          string
+	Query         string
 }

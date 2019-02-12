@@ -19,6 +19,7 @@ func stats(w http.ResponseWriter, r *http.Request) {
 		FromTimestamp: r.FormValue("fromTimestamp"),
 		ToTimestamp:   r.FormValue("toTimestamp"),
 		Name:          r.FormValue("name"),
+		Query:         r.FormValue("query"),
 	}
 	result, err := gl.Search(sr)
 	if err != nil {
