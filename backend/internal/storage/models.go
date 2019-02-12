@@ -22,4 +22,5 @@ type SearchRequest struct {
 	ToTimestamp   int64
 	Name          string
 	Query         string
+	Service       string
 }
