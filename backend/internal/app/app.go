@@ -51,7 +51,17 @@ func (a *App) SendEvent(r *structs.LogRequest) error {
 func (a *App) Search(s *structs.SearchRequest) ([]*structs.LogRequest, error) {
 	a.mu.RLock()
 	defer a.mu.RUnlock()
-	result, err := a.db.Search(searchRequestToInner(s))
+	req := &storage.SearchRequest{}
+	if s.Query != "" {
+		q, err := parseQuery(s.Query)
+		if err != nil {
+			return nil, err
+		}
+		req = q
+	} else {
+		req = searchRequestToInner(s)
+	}
+	result, err := a.db.Search(req)
 	if err != nil {
 		return nil, err
 	}
