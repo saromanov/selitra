@@ -99,6 +99,9 @@ func modelToLogRequest(r *storage.LogRequest) *structs.LogRequest {
 }
 
 func searchRequestToInner(r *structs.SearchRequest) *storage.SearchRequest {
+	if r.Query != "" {
+		return parseQuery(r.Query)
+	}
 	resp := &storage.SearchRequest{}
 	if r.FromTimestamp != "" && r.ToTimestamp != "" {
 		resp.FromTimestamp, _ = strconv.ParseInt(r.FromTimestamp, 0, 64)
