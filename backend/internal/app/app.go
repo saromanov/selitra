@@ -18,7 +18,7 @@ type App struct {
 	eventsCount uint64
 	db          storage.Storage
 	startTime   time.Time
-	config *structs.Config
+	config      *structs.Config
 }
 
 // New provides initialization of the app
@@ -32,7 +32,7 @@ func New(c *structs.Config) (*App, error) {
 		db:        store,
 		mu:        &sync.RWMutex{},
 		startTime: time.Now().UTC(),
-		config: c,
+		config:    c,
 	}, nil
 }
 
@@ -64,7 +64,7 @@ func (a *App) Stat() *structs.ServerStat {
 	return &structs.ServerStat{
 		StartTime: a.startTime.Format(time.RFC3339),
 		Events:    eventsCount,
-		Config: a.config,
+		Config:    a.config,
 	}
 }
 
