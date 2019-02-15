@@ -42,7 +42,7 @@ func parseQuery(query string) (*storage.SearchRequest, error) {
 // getDate returns from and to timestamps
 // it should be in format 'date=today'
 func getDate(expr string) (int64, int64, error) {
-	values := strings.Split(expr, "=")
+	values := strings.Split(expr, ":")
 	if len(values) <= 1 {
 		return 0, 0, errQueryParse
 	}
@@ -61,7 +61,7 @@ func getDate(expr string) (int64, int64, error) {
 
 // getService returns service name in the case "service=name"
 func getService(line string) (string, error) {
-	values := strings.Split(line, "=")
+	values := strings.Split(line, ":")
 	if len(values) <= 1 {
 		return "", errQueryParse
 	}
