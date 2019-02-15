@@ -55,6 +55,9 @@ func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
 		if sr.Service != "" {
 			db = db.Where("service=?", sr.Service)
 		}
+		if st.FromTimestamp != 0 && st.ToTimestamp != 0 {
+			db = db.Where("timestamp BETWEEN ? AND ?", st.FromTimestamp, st.ToTimestamp)
+		}
 		return db
 	}
 	if sr.Name != "" {
