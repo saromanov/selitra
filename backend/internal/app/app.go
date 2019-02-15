@@ -100,7 +100,8 @@ func modelToLogRequest(r *storage.LogRequest) *structs.LogRequest {
 
 func searchRequestToInner(r *structs.SearchRequest) *storage.SearchRequest {
 	if r.Query != "" {
-		return parseQuery(r.Query)
+		q, _ := parseQuery(r.Query)
+		return q
 	}
 	resp := &storage.SearchRequest{}
 	if r.FromTimestamp != "" && r.ToTimestamp != "" {
