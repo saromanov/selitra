@@ -17,7 +17,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"level": "LOW",
 
 ## Query
 ```
-!service=first;date=today;level=ERROR"
+!service=first+date=today+level:ERROR"
 ```
 
 ## Server stat
