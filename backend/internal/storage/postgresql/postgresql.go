@@ -55,14 +55,8 @@ func (s *storage) Search(sr *st.SearchRequest) ([]*st.LogRequest, error) {
 
 // makeQuery provides making of the query to Postgresql
 func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
-	if sr.Query != "" {
-		if sr.Service != "" {
-			db = db.Where("service=?", sr.Service)
-		}
-		if sr.FromTimestamp != 0 && sr.ToTimestamp != 0 {
-			db = db.Where("timestamp BETWEEN ? AND ?", sr.FromTimestamp, sr.ToTimestamp)
-		}
-		return db
+	if sr.FromTimestamp != 0 && sr.ToTimestamp != 0 {
+		db = db.Where("timestamp BETWEEN ? AND ?", sr.FromTimestamp, sr.ToTimestamp)
 	}
 	if sr.Name != "" {
 		db = db.Where("name=?", sr.Name)
