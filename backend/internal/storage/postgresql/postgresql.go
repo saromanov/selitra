@@ -69,7 +69,7 @@ func (s *storage) makeQuery(db *gorm.DB, sr *st.SearchRequest) *gorm.DB {
 }
 
 // Aggregate provides aggregation on the data
-func (s *storage) Aggregate(sr *st.SearchRequest) ([]*st.LogRequest, error) {
+func (s *storage) Aggregate(sr *st.AggregateSearchRequest) ([]*st.LogRequest, error) {
 	return nil, nil
 }
 
