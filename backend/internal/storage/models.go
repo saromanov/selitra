@@ -24,3 +24,10 @@ type SearchRequest struct {
 	Query         string
 	Service       string
 }
+
+// AggregateSearchRequest provides making of search requests
+// for aggregations
+type AggregateSearchRequest struct {
+	FromTimestamp int64
+	ToTimestamp   int64
+}
