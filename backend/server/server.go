@@ -23,27 +23,39 @@ func stats(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := sr.Validate(); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%v", err)
+		makeError(w, Error{
+			StatusCode: http.StatusBadRequest,
+			Message:    fmt.Sprintf("unable to validate request: %v", err),
+		})
 		return
 	}
 	result, err := gl.Search(sr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%v", err)
+		makeError(w, Error{
+			StatusCode: http.StatusBadRequest,
+			Message:    fmt.Sprintf("unable to search data: %v", err),
+		})
 		return
 	}
 
 	response, err := json.Marshal(result)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		fmt.Fprintf(w, "%v", err)
+		makeError(w, Error{
+			StatusCode: http.StatusInternalServerError,
+			Message:    fmt.Sprintf("unable to marshal data: %v", err),
+		})
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	if _, err := w.Write(response); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		fmt.Fprint(w, "unable to write data")
+		makeError(w, Error{
+			StatusCode: http.StatusInternalServerError,
+			Message:    fmt.Sprintf("unable to write response: %v", err),
+		})
 		return
 	}
 }
