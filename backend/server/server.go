@@ -21,6 +21,11 @@ func stats(w http.ResponseWriter, r *http.Request) {
 		Name:          r.FormValue("name"),
 		Query:         r.FormValue("query"),
 	}
+	if err := sr.Validate(); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "%v", err)
+		return
+	}
 	result, err := gl.Search(sr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
